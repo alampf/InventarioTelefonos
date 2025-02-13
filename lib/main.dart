@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mongo_aplication/services/mongo_service.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await MongoService().connect();
   runApp(const MainApp());
 }
 
@@ -10,6 +13,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Center(
           child: Text('Hello World!'),
