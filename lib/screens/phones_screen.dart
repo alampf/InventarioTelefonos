@@ -17,17 +17,50 @@ class _PhoneScreenState extends State<PhoneScreen> {
     super.initState();
     _fetchPhones;
   }
-  
+
+  @override
+  void dispose() {
+    // Destruir esta Screen cuando saga de esta ventana
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Inventario de Telefonos'),
       ),
-      body: ListView.builder(itemBuilder:),
+      body: ListView.builder(
+          itemCount: phones.length,
+          itemBuilder: (context, index) {
+            var phone = phones[index];
+            return oneTile(phone);
+          }),
     );
   }
+
   void _fetchPhones() async {
     phones = await MongoService().getPhones();
+    setState(() {});
+  }
+
+  ListTile oneTile(PhoneModel phone) {
+    return ListTile(
+      title: Text(phone.marca),
+      subtitle: Text(phone.modelo),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IconButton(
+            onPressed: null,
+            icon: Icon(Icons.edit),
+          ),
+          IconButton(
+            onPressed: null,
+            icon: Icon(Icons.delete),
+          ),
+        ],
+      ),
+    );
   }
 }
