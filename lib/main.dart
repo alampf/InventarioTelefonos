@@ -5,6 +5,7 @@ import 'package:mongo_aplication/services/mongo_service.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MongoService().connect();
+  print('Conexion a MOngoDB establecida');
   runApp(const MainApp());
 }
 

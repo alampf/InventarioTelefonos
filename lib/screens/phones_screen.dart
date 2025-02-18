@@ -15,7 +15,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchPhones;
+    _fetchPhones();
   }
 
   @override
@@ -41,6 +41,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
 
   void _fetchPhones() async {
     phones = await MongoService().getPhones();
+    print('En fetch: $phones');
     setState(() {});
   }
 
