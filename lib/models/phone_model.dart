@@ -13,6 +13,7 @@ class PhoneModel {
       required this.modelo,
       required this.existencia,
       required this.precio});
+
   // Convertir un Map a JSON
   Map<String, dynamic> toJson() {
     return {

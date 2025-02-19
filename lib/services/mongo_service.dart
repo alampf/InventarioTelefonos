@@ -20,6 +20,7 @@ class MongoService {
       _db = await mongo.Db.create(
           'mongodb+srv://alanpatlani65:DdAymr3xpBLleSMV@cluster0.j6dk5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
       await _db.open();
+      _db.databaseName = 'productos';
       print('Conexion a MongoDB establecida');
     } on SocketException catch (e) {
       print('Error de Conexion: $e');
@@ -37,7 +38,6 @@ class MongoService {
 
   // Mandar a llamar los datos de base de datos
   Future<List<PhoneModel>> getPhones() async {
-    _db.databaseName = 'productos';
     final collection = _db.collection('celulares');
     print('Coleccion Obtenida: $collection');
     var phones = await collection.find().toList();
@@ -66,5 +66,11 @@ class MongoService {
             .set('modelo', phone.modelo)
             .set('existencia', phone.existencia)
             .set('precio', phone.precio));
+  }
+
+  // Eliminar un telefono
+  Future<void> deletePhone(mongo.ObjectId id) async {
+    var collection = _db.collection('celulares');
+    await collection.remove(mongo.where.eq('_id', id));
   }
 }
