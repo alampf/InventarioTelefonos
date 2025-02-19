@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mongo_aplication/models/phone_model.dart';
 import 'package:mongo_aplication/services/mongo_service.dart';
+import 'package:mongo_dart/mongo_dart.dart' as mongo;
 
 class PhoneScreen extends StatefulWidget {
   const PhoneScreen({super.key});
@@ -45,6 +46,12 @@ class _PhoneScreenState extends State<PhoneScreen> {
     setState(() {});
   }
 
+  // Borrar Telefono
+  void _deletePhone(mongo.ObjectId id) async {
+    await MongoService().deletePhone(id);
+    _fetchPhones();
+  }
+
   ListTile oneTile(PhoneModel phone) {
     return ListTile(
       title: Text(phone.marca),
@@ -52,13 +59,15 @@ class _PhoneScreenState extends State<PhoneScreen> {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          IconButton(
+          const IconButton(
             onPressed: null,
             icon: Icon(Icons.edit),
           ),
           IconButton(
-            onPressed: null,
-            icon: Icon(Icons.delete),
+            onPressed: () {
+              _deletePhone(phone.id);
+            },
+            icon: const Icon(Icons.delete),
           ),
         ],
       ),
