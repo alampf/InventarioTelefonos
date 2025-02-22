@@ -51,7 +51,7 @@ class _insertPhoneScreenState extends State<insertPhoneScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Insertar Nuevo Telefono'),
+        title: const Text('Agregar Nuevo Telefono'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -76,7 +76,7 @@ class _insertPhoneScreenState extends State<insertPhoneScreen> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _insertPhone,
-              child: const Text('Insertar Telefono'),
+              child: const Text('Agregar Telefono'),
             ),
           ],
         ),
