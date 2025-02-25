@@ -155,7 +155,10 @@ class _PhoneScreenState extends State<PhoneScreen> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(phone.modelo),
+          Text(
+            phone.modelo,
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
           Text('Existencias: ${phone.existencia}'),
           Text('Precio: \$${phone.precio}'),
         ],
