@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 ThemeData tema1() {
   return ThemeData(
@@ -6,12 +7,11 @@ ThemeData tema1() {
     scaffoldBackgroundColor: Color.fromARGB(255, 0, 98, 255),
     primaryColor: const Color.fromARGB(5, 0, 136, 255),
     // Color de la Barra de la App
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
       backgroundColor: Color.fromARGB(255, 0, 98, 255),
-      titleTextStyle: TextStyle(
+      titleTextStyle: GoogleFonts.lato(
         color: Colors.white,
-        fontSize: 24.0,
-        fontWeight: FontWeight.bold,
+        fontSize: 20.0,
       ),
     ),
     // Color de los Textos
@@ -32,6 +32,13 @@ ThemeData tema1() {
         fontWeight: FontWeight.bold,
         fontSize: 14.0,
       ),
-    )
+    ),
+    // Color de los Botones de MainScreen
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.amberAccent,
+        foregroundColor: Colors.black,
+      ),
+    ),
   );
 }

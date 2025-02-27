@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mongo_aplication/screens/phones_screen.dart';
+import 'package:mongo_aplication/screens/main_screen.dart';
 import 'package:mongo_aplication/services/mongo_service.dart';
 import 'package:mongo_aplication/widgets/theme.dart';
 
@@ -18,7 +18,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: tema1(),
-      home: const PhoneScreen(),
+      home: const MainScreen(),
     );
   }
 }

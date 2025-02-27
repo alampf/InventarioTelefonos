@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:mongo_aplication/models/phone_model.dart';
+import 'package:mongo_aplication/models/laptop_model.dart';
 import 'package:mongo_dart/mongo_dart.dart' as mongo;
 
 class MongoService {
@@ -47,7 +48,17 @@ class MongoService {
     }
     return phones.map((phone) => PhoneModel.fromJson(phone)).toList();
   }
-
+  Future<List<LaptopModel>> getLaptops() async {
+    final collection = _db.collection('laptops');
+    print('Coleccion Obtenida: $collection');
+    var laptops = await collection.find().toList();
+    print('En MongoService: $laptops');
+    if (laptops.isEmpty) {
+      print('No se encontraron datos en la coleccion');
+    }
+    return laptops.map((laptop) => LaptopModel.fromJson(laptop)).toList();
+  }
+  // Inventario de Telefonos //
   // Insertar un nuevo telefono
   Future<void> insertPhone(PhoneModel phone) async {
     _db.databaseName = 'productos';
@@ -78,6 +89,39 @@ class MongoService {
   Future<void> addPhone(PhoneModel phone) async {
     var collection = _db.collection('celulares');
     await collection.insert(phone.toJson());
+  }
+
+  // Inventario de Laptops //
+  // Insertar un nuevo laptop
+  Future<void> insertLaptop(LaptopModel laptop) async {
+    _db.databaseName = 'productos';
+    final collection = _db.collection('laptops');
+    await collection.insert(laptop.toJson());
+  }
+
+  // Actualizar un laptop
+  Future<void> updateLaptop(LaptopModel laptop) async {
+    _db.databaseName = 'productos';
+    final collection = _db.collection('laptops');
+    await collection.updateOne(
+        mongo.where.eq('_id', laptop.id),
+        mongo.modify
+            .set('marca', laptop.marca)
+            .set('modelo', laptop.modelo)
+            .set('existencia', laptop.existencia)
+            .set('precio', laptop.precio));
+  }
+
+  // Eliminar un laptop
+  Future<void> deleteLaptop(mongo.ObjectId id) async {
+    var collection = _db.collection('laptops');
+    await collection.remove(mongo.where.eq('_id', id));
+  }
+  
+  // Agregar un nuevo laptop
+  Future<void> addLaptop(LaptopModel laptop) async {
+    var collection = _db.collection('laptops');
+    await collection.insert(laptop.toJson());
   }
 
   // Cerrar la conexion

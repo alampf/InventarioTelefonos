@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:mongo_aplication/models/phone_model.dart';
-import 'package:mongo_aplication/screens/insert_phone_screen.dart';
+import 'package:mongo_aplication/models/laptop_model.dart';
+import 'package:mongo_aplication/screens/insert_laptop_screen.dart';
 import 'package:mongo_aplication/services/mongo_service.dart';
 import 'package:mongo_dart/mongo_dart.dart' as mongo;
 
-class PhoneScreen extends StatefulWidget {
-  const PhoneScreen({super.key});
+class LaptopScreen extends StatefulWidget {
+  const LaptopScreen({super.key});
 
   @override
-  State<PhoneScreen> createState() => _PhoneScreenState();
+  State<LaptopScreen> createState() => _LaptopScreenState();
 }
 
-class _PhoneScreenState extends State<PhoneScreen> {
-  List<PhoneModel> phones = [];
+class _LaptopScreenState extends State<LaptopScreen> {
+  List<LaptopModel> laptops = [];
   late TextEditingController _marcaController;
   late TextEditingController _modeloController;
   late TextEditingController _existenciaController;
@@ -25,7 +25,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
     _modeloController = TextEditingController();
     _existenciaController = TextEditingController();
     _precioController = TextEditingController();
-    _fetchPhones();
+    _fetchLaptops();
   }
 
   @override
@@ -42,7 +42,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Inventario de Telefonos'),
+        title: const Text('Inventario de Laptops'),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
@@ -50,95 +50,95 @@ class _PhoneScreenState extends State<PhoneScreen> {
               onTap: () async {
                 await Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const insertPhoneScreen(),
+                    builder: (context) => const insertLaptopScreen(),
                   ),
                 );
-                _fetchPhones();
+                _fetchLaptops();
               },
               child: const Icon(
                 Icons.add,
                 size: 26.0,
               ),
             ),
-          ),
+          )
         ],
       ),
       body: ListView.builder(
-        itemCount: phones.length,
+        itemCount: laptops.length,
         itemBuilder: (context, index) {
-          var phone = phones[index];
-          return oneTile(phone);
+          var laptop = laptops[index];
+          return oneTile(laptop);
         },
       ),
     );
   }
 
-  void _fetchPhones() async {
-    phones = await MongoService().getPhones();
-    print('En fetch: $phones');
+  void _fetchLaptops() async {
+    laptops = await MongoService().getLaptops();
+    print('En fetch: $laptops');
     setState(() {});
   }
 
-  // Borrar Telefono
-  void _deletePhone(mongo.ObjectId id) async {
-    await MongoService().deletePhone(id);
-    _fetchPhones();
+  // Borrar Laptop
+  void _deleteLaptop(mongo.ObjectId id) async {
+    await MongoService().deleteLaptop(id);
+    _fetchLaptops();
   }
 
-  // Actualizar Telefono
-  void _updatePhone(PhoneModel phone) async {
-    await MongoService().updatePhone(phone);
-    _fetchPhones();
+  // Actualizar Laptop
+  void _updateLaptop(LaptopModel laptop) async {
+    await MongoService().updateLaptop(laptop);
+    _fetchLaptops();
   }
 
-  void _showEditDialog(PhoneModel phone) {
-    _marcaController.text = phone.marca;
-    _modeloController.text = phone.modelo;
-    _existenciaController.text = phone.existencia.toString();
-    _precioController.text = phone.precio.toString();
+  void _showEditDialog(LaptopModel laptop) {
+    _marcaController.text = laptop.marca;
+    _modeloController.text = laptop.modelo;
+    _existenciaController.text = laptop.existencia.toString();
+    _precioController.text = laptop.precio.toString();
 
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Editar Telefono'),
+          title: const Text('Editar Laptop'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
-                decoration: const InputDecoration(labelText: 'Marca'),
                 controller: _marcaController,
+                decoration: const InputDecoration(labelText: 'Marca'),
               ),
               TextField(
-                decoration: const InputDecoration(labelText: 'Modelo'),
                 controller: _modeloController,
+                decoration: const InputDecoration(labelText: 'Modelo'),
               ),
               TextField(
-                decoration: const InputDecoration(labelText: 'Existencia'),
                 controller: _existenciaController,
+                decoration: const InputDecoration(labelText: 'Existencia'),
               ),
               TextField(
-                decoration: const InputDecoration(labelText: 'Precio'),
                 controller: _precioController,
+                decoration: const InputDecoration(labelText: 'Precio'),
               ),
             ],
           ),
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.of(context).pop();
               },
               child: const Text('Cancelar'),
             ),
             TextButton(
               onPressed: () {
                 // Recuperar los nuevos valores
-                phone.marca = _marcaController.text;
-                phone.modelo = _modeloController.text;
-                phone.existencia = int.parse(_existenciaController.text);
-                phone.precio = double.parse(_precioController.text);
-                _updatePhone(phone);
-                Navigator.pop(context);
+                laptop.marca = _marcaController.text;
+                laptop.modelo = _modeloController.text;
+                laptop.existencia = int.parse(_existenciaController.text);
+                laptop.precio = double.parse(_precioController.text);
+                _updateLaptop(laptop);
+                Navigator.of(context).pop();
               },
               child: const Text('Actualizar'),
             ),
@@ -148,24 +148,24 @@ class _PhoneScreenState extends State<PhoneScreen> {
     );
   }
 
-  ListTile oneTile(PhoneModel phone) {
+  ListTile oneTile(LaptopModel laptop) {
     return ListTile(
-      leading: const Icon(Icons.phone_android),
-      title: Text(phone.marca),
+      leading: const Icon(Icons.laptop),
+      title: Text(laptop.marca),
       subtitle: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            phone.modelo,
+            laptop.modelo,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           Text(
-            'Existencias: ${phone.existencia}',
+            'Existencias: ${laptop.existencia}',
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           Text(
-            'Precio: \$${phone.precio}',
+            'Precio: \$${laptop.precio}',
             style: Theme.of(context).textTheme.headlineSmall,
           ),
         ],
@@ -174,12 +174,12 @@ class _PhoneScreenState extends State<PhoneScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           IconButton(
-            onPressed: () => _showEditDialog(phone),
-            icon: Icon(Icons.edit),
+            onPressed: () => _showEditDialog(laptop),
+            icon: const Icon(Icons.edit),
           ),
           IconButton(
             onPressed: () {
-              _deletePhone(phone.id);
+              _deleteLaptop(laptop.id);
             },
             icon: const Icon(Icons.delete),
           ),
