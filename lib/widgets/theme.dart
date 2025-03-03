@@ -4,20 +4,20 @@ import 'package:google_fonts/google_fonts.dart';
 ThemeData tema1() {
   return ThemeData(
     // Color Base
-    scaffoldBackgroundColor: Color.fromARGB(255, 0, 98, 255),
+    scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
     primaryColor: const Color.fromARGB(5, 0, 136, 255),
     // Color de la Barra de la App
     appBarTheme: AppBarTheme(
-      backgroundColor: Color.fromARGB(255, 0, 98, 255),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       titleTextStyle: GoogleFonts.lato(
-        color: Colors.white,
+        color: const Color.fromARGB(255, 0, 0, 0),
         fontSize: 20.0,
       ),
     ),
     // Color de los Textos
     textTheme: const TextTheme(
       headlineSmall: TextStyle(
-        color: Colors.yellowAccent,
+        color: Color.fromARGB(255, 108, 108, 108),
         fontWeight: FontWeight.bold,
         fontSize: 16.0,
       ),
